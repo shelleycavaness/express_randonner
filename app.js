@@ -9,6 +9,11 @@ var http = require('http'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
+// var    swaggerUi = require('swagger-ui-express');
+// var    swaggerDocument = require('swagger.json');
+// const swaggerDocument = require('./swagger.json');
+
+
 var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
