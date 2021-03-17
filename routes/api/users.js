@@ -16,6 +16,7 @@ router.get('/user', auth.required, function(req, res, next){
 });
 
 //update a user identified with the token 
+// return the modified user with the token
 router.put('/user', auth.required, function(req, res, next){
   User.findById(req.payload.id).then(function(user){
     if(!user){ return res.sendStatus(401); }
