@@ -1,11 +1,12 @@
-var mongoose = require('mongoose');
-var router = require('express').Router();
-var passport = require('passport');
-var User = mongoose.model('User');
-var auth = require('../auth');
+const mongoose = require('mongoose');
+const router = require('express').Router();
+const passport = require('passport');
+const User = mongoose.model('User');
+const auth = require('../auth');
 
-// Get a user with token 
-// In postman this return the user and the token in plain sight not exactly ideal for security
+/***********  Get User with token *****************/
+// In postman this return the user with the token in plain sight! 
+// not exactly ideal for security
 router.get('/user', auth.required, function(req, res, next){
   User.findById(req.payload.id).then(function(user){
     //if the user token is wrong send a 401 status
@@ -15,6 +16,7 @@ router.get('/user', auth.required, function(req, res, next){
   }).catch(next);
 });
 
+/************    Update User       ******************/ 
 //update a user identified with the token 
 // return the modified user with the token
 router.put('/user', auth.required, function(req, res, next){
@@ -44,6 +46,7 @@ router.put('/user', auth.required, function(req, res, next){
   }).catch(next);
 });
 
+/***********    login User   ******************/ 
 // User logins in with username and password creating a new token
 router.post('/users/login', function(req, res, next){
   if(!req.body.user.email){
@@ -66,11 +69,12 @@ router.post('/users/login', function(req, res, next){
   })(req, res, next);
 });
 
-///Create a new user following the model and generate a token, 
+/**************  Create a new User   ******************/ 
+// following the model and generate a token, 
 // don't forget in postman you are sending a user object with the 3 fields in json ;-)
 router.post('/users', function(req, res, next){
   console.log(` ********* calling create user route`, req.body)
-  var user = new User();
+  let user = new User();
 
   user.username = req.body.user.username;
   user.email = req.body.user.email;

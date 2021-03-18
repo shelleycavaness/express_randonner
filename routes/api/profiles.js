@@ -1,7 +1,7 @@
-var router = require('express').Router();
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var auth = require('../auth');
+const router = require('express').Router();
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const auth = require('../auth');
 
 // Preload user profile on routes with ':username'
 router.param('username', function(req, res, next, username){
@@ -14,6 +14,8 @@ router.param('username', function(req, res, next, username){
   }).catch(next);
 });
 
+/***********   Get Profile by username  *********/
+/* http://localhost:3000/api/profiles/rim*/
 router.get('/:username', auth.optional, function(req, res, next){
   if(req.payload){
     User.findById(req.payload.id).then(function(user){
@@ -27,7 +29,7 @@ router.get('/:username', auth.optional, function(req, res, next){
 });
 
 router.post('/:username/follow', auth.required, function(req, res, next){
-  var profileId = req.profile._id;
+  const profileId = req.profile._id;
 
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
@@ -39,7 +41,7 @@ router.post('/:username/follow', auth.required, function(req, res, next){
 });
 
 router.delete('/:username/follow', auth.required, function(req, res, next){
-  var profileId = req.profile._id;
+  const profileId = req.profile._id;
 
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
