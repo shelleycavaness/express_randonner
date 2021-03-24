@@ -15,7 +15,7 @@ require('dotenv').config()
 * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details       */
 const {MongoClient} = require('mongodb');
 
-const uri = "mongodb+srv://she:<1964she>@realworldexpress.orbu6.mongodb.net/myFirst?retryWrites=true&w=majority"
+const uri = "mongodb+srv://<username>:<password>@realworldexpress.orbu6.mongodb.net/myFirst?retryWrites=true&w=majority"
 //////////////////////////////////////////////
 
 const isProduction = process.env.NODE_ENV === 'production';
