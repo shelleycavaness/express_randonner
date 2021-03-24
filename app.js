@@ -9,10 +9,14 @@ const http = require('http'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
-// const    swaggerUi = require('swagger-ui-express');
-// const    swaggerDocument = require('swagger.json');
-// const swaggerDocument = require('./swagger.json');
+require('dotenv').config()
+/**
+* Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
+* See https://docs.mongodb.com/ecosystem/drivers/node/ for more details       */
+const {MongoClient} = require('mongodb');
 
+const uri = "mongodb+srv://she:<1964she>@realworldexpress.orbu6.mongodb.net/myFirst?retryWrites=true&w=majority"
+//////////////////////////////////////////////
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -28,7 +32,8 @@ app.use(bodyParser.json());
 
 app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
-
+//Create a session middleware. 
+//Session data is not saved in the cookie itself, just the session ID.
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 
 if (!isProduction) {
@@ -38,6 +43,7 @@ if (!isProduction) {
 if(isProduction){
   mongoose.connect(process.env.MONGODB_URI);
 } else {
+  console.log("We are connected with Mogodb !");
   mongoose.connect('mongodb://localhost/conduit');
   mongoose.set('debug', true);
 }
@@ -61,7 +67,7 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (!isProduction) {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     console.log(err.stack);
 
     res.status(err.status || 500);

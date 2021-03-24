@@ -1,6 +1,6 @@
 const jwt = require('express-jwt');
 const secret = require('../config').secret;
-//middleware
+///  middleware
 /// in case a route is not protected, we still want to get the optional auth user from jwt
 function getTokenFromHeader(req){
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
@@ -20,7 +20,7 @@ const auth = {
   optional: jwt({
     secret: secret,
     userProperty: 'payload',
-    credentialsRequired: false,
+    credentialsRequired: false,   //JWT setting for security?
     getToken: getTokenFromHeader
   })
 };
