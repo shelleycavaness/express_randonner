@@ -9,13 +9,16 @@ const http = require('http'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
 
-require('dotenv').config()
+const dotenv = require('dotenv').config();
+
 /**
 * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
 * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details       */
 const {MongoClient} = require('mongodb');
 
-const uri = "mongodb+srv://<username>:<password>@realworldexpress.orbu6.mongodb.net/myFirst?retryWrites=true&w=majority"
+//async problem here and dotenv
+const uri = process.env.URI
+// console.log(`uri`, uri) 
 //////////////////////////////////////////////
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -52,6 +55,8 @@ require('./models/User');
 require('./models/Article');
 require('./models/Comment');
 require('./config/passport');
+require('./models/Park');
+require('./models/Plant');
 
 app.use(require('./routes'));
 
@@ -90,6 +95,6 @@ app.use((err, req, res, next) => {
 });
 
 // finally, let's start our server...
-const server = app.listen( process.env.PORT || 3000, () =>{
+const server = app.listen( process.env.PORT || 3003, () =>{
   console.log('Listening on port ' + server.address().port);
 });

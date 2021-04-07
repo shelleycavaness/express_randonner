@@ -4,6 +4,9 @@ router.use('/', require('./users'));
 router.use('/profiles', require('./profiles'));
 router.use('/articles', require('./articles'));
 router.use('/tags', require('./tags'));
+router.use('/', require('./parks'));
+// router.use('/plants', require('./plants'));
+
 
 router.use((err, req, res, next) => {
   if(err.name === 'ValidationError'){
