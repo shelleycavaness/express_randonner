@@ -5,8 +5,8 @@ const ParkSchema = new mongoose.Schema({
   slug: {type: String, lowercase: true, unique: true},
   title: String,
   description: String,
-  body: String,
-  image: String,
+  // body: String,
+  image: String ,
   favoritesCount: {type: Number, default: 0},
   plants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plant' }],
 });
@@ -23,15 +23,15 @@ ParkSchema.methods.updateFavoriteCount = function() {
 };
 
 
-ParkSchema.methods.toJSONFor = function(user){
-    return {
-      slug: this.slug,
-      title: this.title,
-      description: this.description,
-      body: this.body,
-      favorited: user ? user.isFavorite(this._id) : false,
-      favoritesCount: this.favoritesCount,
-    };
-  };
+// ParkSchema.methods.toJSONFor = function(user){
+//     return {
+//       slug: this.slug,
+//       title: this.title,
+//       description: this.description,
+//       image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
+//       favorited: user ? user.isFavorite(this._id) : false,
+//       favoritesCount: this.favoritesCount,
+//     };
+//   };
   
   mongoose.model('Park', ParkSchema);
