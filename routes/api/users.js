@@ -7,8 +7,8 @@ const auth = require('../auth');
 /***********  Get User with token *****************/
 // In postman this return the user with the token in plain sight! 
 // not exactly ideal for security
-router.get('/user', auth.required, function(req, res, next){
-  User.findById(req.payload.id).then(function(user){
+router.get('/user', auth.required, (req, res, next) => {
+  User.findById(req.payload.id).then((user) =>{
     //if the user token is wrong send a 401 status
     if(!user){ return res.sendStatus(401); }
   //otherwise return the user
@@ -19,8 +19,8 @@ router.get('/user', auth.required, function(req, res, next){
 /************    Update User       ******************/ 
 //update a user identified with the token 
 // return the modified user with the token
-router.put('/user', auth.required, function(req, res, next){
-  User.findById(req.payload.id).then(function(user){
+router.put('/user', auth.required,(req, res, next) => {
+  User.findById(req.payload.id).then((user) => {
     if(!user){ return res.sendStatus(401); }
 
     // only update fields that were actually passed...
@@ -39,8 +39,8 @@ router.put('/user', auth.required, function(req, res, next){
     if(typeof req.body.user.password !== 'undefined'){
       user.setPassword(req.body.user.password);
     }
-
-    return user.save().then(function(){
+// return the saved user
+    return user.save().then(() => {
       return res.json({user: user.toAuthJSON()});
     });
   }).catch(next);
@@ -48,15 +48,16 @@ router.put('/user', auth.required, function(req, res, next){
 
 /***********    login User   ******************/ 
 // User logins in with username and password creating a new token
-router.post('/users/login', function(req, res, next){
+router.post('/users/login', (req, res, next) => {
   if(!req.body.user.email){
-    return res.status(422).json({errors: {email: "can't be blank"}});
+    return res.status(422).json({errors: {email: "email can't be blank"}});
   }
 
   if(!req.body.user.password){
-    return res.status(422).json({errors: {password: "can't be blank"}});
+    return res.status(422).json({errors: {password: "password can't be blank"}});
   }
-
+//maybe turn this into an async await function with a promise ?
+//I ger a strange warning when i make this an arrow fuction
   passport.authenticate('local', {session: false}, function(err, user, info){
     if(err){ return next(err); }
 
@@ -70,9 +71,8 @@ router.post('/users/login', function(req, res, next){
 });
 
 /**************  Create a new User   ******************/ 
-// following the model and generate a token, 
 // don't forget in postman you are sending a user object with the 3 fields in json ;-)
-router.post('/users', function(req, res, next){
+router.post('/users',(req, res, next) => {
   console.log(` ********* calling create user route`, req.body)
   let user = new User();
 
@@ -80,7 +80,7 @@ router.post('/users', function(req, res, next){
   user.email = req.body.user.email;
   user.setPassword(req.body.user.password);
 
-  user.save().then(function(){
+  user.save().then(() => {
     return res.json({user: user.toAuthJSON()});
   }).catch(next);
 });
