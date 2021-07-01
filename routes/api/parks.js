@@ -7,7 +7,6 @@ const Park = mongoose.model('Park');
 // Preload park objects on routes with ':park'
 // router.param('park', function(req, res, next, slug) {
 //         console.log(`55555555555555555555555555555` )
-
 //   Park.findOne({ slug: slug})
 //     .then(function (park) {
 //       console.log(`7777777777777777` )
@@ -19,7 +18,7 @@ const Park = mongoose.model('Park');
 // });
 
 // get a park by it's id in mongo
-router.get( '/:_id', (req,res, next) => {
+router.get( '/parks/:_id', (req,res, next) => {
   console.log(`get slash =============`, req.params )
  // Yes, it would be nice to validate the ObjectId, for erros.
     Park.findById(req.params._id).then((park) =>{
@@ -53,10 +52,22 @@ router.post('/parks', (req, res, next )=>{
 })
 
 //list all parks
+router.get( '/parks', (req,res, next) => {
+  console.log(`get slash =============`, req.params )
+ // Yes, it would be nice to validate the ObjectId, for erros.
+    Park.find().then((parks) =>{
+      //error if the park doesn exist
+      if(!parks){ return res.status(500).json({errors: {parks: "parks not working"}}); }
+    //otherwise return the park 
+      return res.json({parks: parks});
+    })
+    .catch(next); 
+
+})
 // router.get('/parks')
 /************    Update Park       ******************/ 
 
-router.put('/:_id', (req, res, next) => {
+router.put('/parks/:_id', (req, res, next) => {
   console.log(`111111111111111`, )
   Park.findById(req.params._id).then((park) =>{
     console.log(`22222222222222`, park)
