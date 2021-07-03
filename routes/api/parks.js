@@ -70,7 +70,7 @@ router.get( '/parks', (req,res, next) => {
 router.put('/parks/:_id', (req, res, next) => {
   console.log(`111111111111111`, )
   Park.findById(req.params._id).then((park) =>{
-    console.log(`22222222222222`, park)
+    // console.log(`22222222222222`, park)
     //error if the park doesn exist
     if(!park){ return res.status(500).json({errors: {park_id: "broken"}}); }
   //otherwise return the park 
@@ -84,15 +84,16 @@ router.put('/parks/:_id', (req, res, next) => {
     if(typeof req.body.park.slug !== 'undefined'){
       park.slug = req.body.park.slug;
     }
-    // if(typeof req.body.user.image !== 'undefined'){
-    //   park.image = req.body.park.image;
-    // }
-    ///update the plants in the plants array
-    // if(typeof req.body.park.plants !== 'undefined'){
-    //   park.plants = req.body.park.plants;
-    // }
+    if(typeof req.body.park.image !== 'undefined'){
+      park.image = req.body.park.image;
+    }
+    // //update the plants in the plants array
+    if(typeof req.body.park.plants !== 'undefined'){
+      park.plants = req.body.park.plants;
+    }
    //return the saved plant
    return park.save().then(()=>{
+    console.log(`park updated`) 
     return res.json({park: park});
    }) 
   })

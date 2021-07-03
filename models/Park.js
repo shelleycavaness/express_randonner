@@ -8,7 +8,9 @@ const ParkSchema = new mongoose.Schema({
   // body: String,
   image: String ,
   favoritesCount: {type: Number, default: 0},
-  plants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plant' }],
+  // plants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plant' }], 
+  //this is just the mongo ids
+  plants: []
 });
 
 //updating the likes on the park
