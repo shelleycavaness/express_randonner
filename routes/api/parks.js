@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 // const { route } = require('./users');
 const Plant = mongoose.model('Plant');
 const Park = mongoose.model('Park');
+const User = mongoose.model('User');
+const auth = require('../auth');
 
 // Preload park objects on routes with ':park'
 // router.param('park', function(req, res, next, slug) {
@@ -101,7 +103,35 @@ router.put('/parks/:_id', (req, res, next) => {
 
 })
 
+// Favorite an park
+// router.post('/:park/favorite', auth.required, function(req, res, next) {
+//   let parkId = req.park._id;
 
+//   User.findById(req.payload.id).then(function(user){
+//     if (!user) { return res.sendStatus(401); }
+
+//     return user.favorite(parkId).then(function(){
+//       return req.park.updateFavoriteCount().then(function(park){
+//         return res.json({park: park.toJSONFor(user)});
+//       });
+//     });
+//   }).catch(next);
+// });
+
+// Unfavorite an park
+// router.delete('/:article/favorite', auth.required, function(req, res, next) {
+//   var articleId = req.article._id;
+
+//   User.findById(req.payload.id).then(function (user){
+//     if (!user) { return res.sendStatus(401); }
+
+//     return user.unfavorite(articleId).then(function(){
+//       return req.article.updateFavoriteCount().then(function(article){
+//         return res.json({article: article.toJSONFor(user)});
+//       });
+//     });
+//   }).catch(next);
+// });
 
 module.exports = router;
 

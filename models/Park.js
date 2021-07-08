@@ -24,16 +24,16 @@ ParkSchema.methods.updateFavoriteCount = function() {
   });
 };
 
-
-// ParkSchema.methods.toJSONFor = function(user){
-//     return {
-//       slug: this.slug,
-//       title: this.title,
-//       description: this.description,
-//       image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
-//       favorited: user ? user.isFavorite(this._id) : false,
-//       favoritesCount: this.favoritesCount,
-//     };
-//   };
+///create favorite parks for user
+ParkSchema.methods.toJSONFor = function(user){
+    return {
+      slug: this.slug,
+      title: this.title,
+      description: this.description,
+      image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
+      favorited: user ? user.isFavorite(this._id) : false,
+      favoritesCount: this.favoritesCount,
+    };
+  };
   
   mongoose.model('Park', ParkSchema);
